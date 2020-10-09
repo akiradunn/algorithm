@@ -18,8 +18,8 @@ public class Solution5 {
      * 输入: "cbbd"
      * 输出: "bb"
      *
-     *
-     * 1.思考是否可以用dp,发现子问题的结果并没有跟当前问题有强烈相关,当前问题的结果并不能直接由子问题推导出来,故不能用dp
+     * 中心扩展算法
+     * 1.思考是否可以用dp,发现子问题的结果并没有跟当前问题有强烈相关,当前问题的结果并不能直接由子问题推导出来,故不能用dp(错误,dp是如果可以定义迭代方程就可以用)
      * 2.从问题本身出发,最长回文子串,可以考虑从每一个字符开始想象搜索最长的回文子串是哪个,得来思路
      */
     public static void main(String[] args) {
@@ -79,4 +79,30 @@ public class Solution5 {
         return cycleStr;
     }
 
+
+    /**
+     * 官方题解
+     * https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
+     */
+    public String longestPalindromeByLeetCode(String s) {
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        String ans = "";
+        for (int l = 0; l < n; ++l) {
+            for (int i = 0; i + l < n; ++i) {
+                int j = i + l;
+                if (l == 0) {
+                    dp[i][j] = true;
+                } else if (l == 1) {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j));
+                } else {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]);
+                }
+                if (dp[i][j] && l + 1 > ans.length()) {
+                    ans = s.substring(i, i + l + 1);
+                }
+            }
+        }
+        return ans;
+    }
 }
