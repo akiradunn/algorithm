@@ -1,4 +1,7 @@
 package com.akiradunn.oj.leetcode;
+
+import com.akiradunn.oj.common.TreeNode;
+
 public class BinaryTreeLongestConsecutiveSequence549 {
     int max = 0;
     public int longestConsecutive(TreeNode root) {
@@ -37,11 +40,4 @@ public class BinaryTreeLongestConsecutiveSequence549 {
         max = Math.max(max, dec + inc -1);
         return new int[]{dec, inc};
     }
-
-     public class TreeNode {
-         int val;
-         TreeNode left;
-         TreeNode right;
-         TreeNode(int x) { val = x; }
-     }
 }
