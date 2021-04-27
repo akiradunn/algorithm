@@ -61,4 +61,43 @@ public class ALISolution15 {
             return res;
         }
     }
+
+    //双指针法
+    class Solution2 {
+        List<List<Integer>> res = new ArrayList<>();
+        public List<List<Integer>> threeSum(int[] nums) {
+            if(nums.length == 0) return res;
+            int n = nums.length;
+            Arrays.sort(nums);
+            for(int i=0; i<n-2; i++){
+                if(i>0 && nums[i] == nums[i-1]){
+                    continue;
+                }
+                if(nums[i] + nums[i+1] + nums[i+2] > 0){
+                    continue;
+                }
+                int l = i+1;
+                int r = n-1;
+                while(l < r){
+                    int sum = nums[i] + nums[l] + nums[r];
+                    if(sum == 0){
+                        res.add(new ArrayList<>(Arrays.asList(nums[i], nums[l], nums[r])));
+                        while(l < r && nums[l] == nums[l+1]){
+                            l++;
+                        }
+                        l++;
+                        while(l < r && nums[r] == nums[r-1]){
+                            r--;
+                        }
+                        r--;
+                    }else if(sum > 0){
+                        r--;
+                    }else{
+                        l++;
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
