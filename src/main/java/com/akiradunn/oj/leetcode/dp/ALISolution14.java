@@ -1,4 +1,8 @@
 package com.akiradunn.oj.leetcode.dp;
+
+import java.util.ArrayList;
+import java.util.List;
+
 //14. 最长公共前缀
 //编写一个函数来查找字符串数组中的最长公共前缀。
 //
@@ -51,6 +55,34 @@ public class ALISolution14 {
                 max = f[i] ? i : max;
             }
             return max > 0 ? minStr.substring(0, max) : "";
+        }
+    }
+
+    class Solution2 {
+        public String longestCommonPrefix(String[] strs) {
+            if(strs.length == 0) return "";
+            if(strs.length == 1) return strs[0];
+            List<char[]> list = new ArrayList<>();
+            int minLen = strs[0].length();
+            list.add(strs[0].toCharArray());
+            int res = 0;
+            for(int i=1; i<strs.length; i++){
+                minLen = Math.min(minLen, strs[i].length());
+                list.add(strs[i].toCharArray());
+            }
+            for(int i=0; i<minLen; i++){
+                char firstChar = list.get(0)[i];
+                int j=1;
+                for(; j<list.size(); j++){
+                    char tempChar = list.get(j)[i];
+                    if(tempChar != firstChar){
+                        break;
+                    }
+                }
+                if(j != list.size()) break;
+                res++;
+            }
+            return strs[0].substring(0, res);
         }
     }
 }
