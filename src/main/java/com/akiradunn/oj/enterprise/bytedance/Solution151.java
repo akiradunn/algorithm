@@ -1,5 +1,4 @@
 package com.akiradunn.oj.enterprise.bytedance;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,21 +49,27 @@ import java.util.List;
 //请尝试使用 O(1) 额外空间复杂度的原地解法。
 //通过次数134,302提交次数287,684
 public class Solution151 {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.reverseWords("  hello world  "));
+    }
+
     static class Solution{
         public String reverseWords(String s){
             int n = s.length();
             char[] charArray = s.toCharArray();
-            int move = n-1;
+            int move = n;
             for(int i=n-1; i>=0; i--){
                 if(charArray[i] == ' '){
                     continue;
                 }
                 int j = i;
                 for(;j>=0;){
+                    //必须--move, 不能move--
                     if(charArray[j] != ' '){
-                        charArray[move--] = charArray[j--];
+                        charArray[--move] = charArray[j--];
                     }else{
-                        charArray[move--] = ' ';
+                        charArray[--move] = ' ';
                         break;
                     }
                 }
