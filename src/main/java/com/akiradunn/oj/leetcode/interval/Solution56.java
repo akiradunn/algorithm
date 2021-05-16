@@ -53,4 +53,37 @@ public class Solution56 {
             return merged.toArray(new int[][]{});
         }
     }
+
+    class Solution2 {
+        public int[][] merge(int[][] intervals) {
+            if(intervals.length == 1) return intervals;
+            Arrays.sort(intervals, new Comparator<int[]>() {
+                public int compare(int[] o1, int[] o2) {
+                    return o1[0] - o2[0];
+                }
+            });
+            List<int[]> res = new ArrayList<>();
+            int[] last = new int[]{intervals[0][0], intervals[0][1]};
+            for(int i=1; i<intervals.length; i++){
+                int[] cur = intervals[i];
+                if(cur[0] > last[1]){
+                    res.add(new int[]{last[0], last[1]});
+                    last[0] = cur[0];
+                    last[1] = cur[1];
+                    //如果到最后一个元素了
+                    if(i == intervals.length-1){
+                        res.add(new int[]{cur[0], cur[1]});
+                    }
+                }else{
+                    int r = Math.max(last[1], cur[1]);
+                    last[1] = r;
+                    //如果到最后一个元素了
+                    if(i == intervals.length-1){
+                        res.add(new int[]{last[0], last[1]});
+                    }
+                }
+            }
+            return res.toArray(new int[][]{});
+        }
+    }
 }
