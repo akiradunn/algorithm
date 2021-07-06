@@ -26,7 +26,7 @@ public class Solution219 {
         solution.containsNearbyDuplicate(array, 1);
     }
 
-    class Solution {
+    static class Solution {
         public boolean containsNearbyDuplicate(int[] nums, int k) {
             Set<Integer> set = new HashSet<>();
             for (int i = 0; i < nums.length; ++i) {
