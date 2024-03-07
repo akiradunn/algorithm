@@ -40,28 +40,38 @@ public class Solution42 {
 
     /**
      * 对于下标 i，下雨后水能到达的最大高度等于下标 i 两边的最大高度的最小值，下标 i 处能接的雨水量等于下标 i 处的水能到达的最大高度减去 height[i]
+     * 优化算法 3n
      */
     public static int trap(int[] height) {
         int[] leftMax = new int[height.length];
         int[] rightMax = new int[height.length];
+
+        // 时间复杂度 n
+        int curLeftMax = Integer.MIN_VALUE;
         for (int i=0; i<height.length; i++) {
-            if (i == 0 || i == height.length - 1) {
+            if (i == 0) {
                 continue;
             }
-            // i 右边找最大值
-            int j = i+1;
-            while (j < height.length) {
-                rightMax[i] = Math.max(rightMax[i], height[j]);
-                j ++;
+            if (curLeftMax < height[i-1]) {
+                curLeftMax = height[i-1];
             }
-            // i 左边找最大值
-            int k = i-1;
-            while (k >= 0) {
-                leftMax[i] = Math.max(leftMax[i], height[k]);
-                k --;
-            }
+            leftMax[i] = curLeftMax;
         }
 
+        // 时间复杂度 n
+        int curRightMax = Integer.MIN_VALUE;
+        for (int i=height.length-1; i>=0; i--) {
+            if (i == height.length - 1) {
+                continue;
+            }
+
+            if (curRightMax < height[i+1]) {
+                curRightMax = height[i+1];
+            }
+            rightMax[i] = curRightMax;
+        }
+
+        // 时间复杂度 n
         int result = 0;
         for (int i=1; i<height.length-1; i++) {
             int rainHeight = Math.min(leftMax[i], rightMax[i]);
@@ -69,6 +79,42 @@ public class Solution42 {
                 result = result + rainHeight - height[i];
             }
         }
+
         return result;
     }
+
+    /**
+     * 对于下标 i，下雨后水能到达的最大高度等于下标 i 两边的最大高度的最小值，下标 i 处能接的雨水量等于下标 i 处的水能到达的最大高度减去 height[i]
+     * 2n平方
+     */
+//    public static int trap(int[] height) {
+//        int[] leftMax = new int[height.length];
+//        int[] rightMax = new int[height.length];
+//        for (int i=0; i<height.length; i++) {
+//            if (i == 0 || i == height.length - 1) {
+//                continue;
+//            }
+//            // i 右边找最大值
+//            int j = i+1;
+//            while (j < height.length) {
+//                rightMax[i] = Math.max(rightMax[i], height[j]);
+//                j ++;
+//            }
+//            // i 左边找最大值
+//            int k = i-1;
+//            while (k >= 0) {
+//                leftMax[i] = Math.max(leftMax[i], height[k]);
+//                k --;
+//            }
+//        }
+//
+//        int result = 0;
+//        for (int i=1; i<height.length-1; i++) {
+//            int rainHeight = Math.min(leftMax[i], rightMax[i]);
+//            if (rainHeight > height[i]) {
+//                result = result + rainHeight - height[i];
+//            }
+//        }
+//        return result;
+//    }
 }
