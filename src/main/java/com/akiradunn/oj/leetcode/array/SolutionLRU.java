@@ -75,10 +75,6 @@ public class SolutionLRU {
             this.key = key;
             this.value = value;
         }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
     }
 
     static class CacheList {
@@ -91,13 +87,6 @@ public class SolutionLRU {
             this.tail = new CacheItem(-1, -1);
             head.next = tail;
             tail.prev = head;
-        }
-
-        public void addLast(CacheItem node) {
-            node.prev = tail.prev;
-            tail.prev.next = node;
-            tail.prev = node;
-            node.next = tail;
         }
 
         public void moveToTail(CacheItem node) {
