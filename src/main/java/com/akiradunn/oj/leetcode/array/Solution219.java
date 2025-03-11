@@ -70,4 +70,19 @@ public class Solution219 {
             return false;
         }
     }
+
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> meno = new HashMap<>();
+        for (int i=0; i<nums.length; i++) {
+            if (meno.containsKey(nums[i])) {
+                int lastIndex = meno.get(nums[i]);
+                if (Math.abs(i - lastIndex) <= k) {
+                    return true;
+                }
+            }
+            meno.put(nums[i], i);
+        }
+
+        return false;
+    }
 }
