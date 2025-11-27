@@ -65,4 +65,35 @@ public class Solution3 {
             return res;
         }
     }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() <= 1) {
+            return s.length();
+        }
+
+        int fast = 1;
+        int slow = 0;
+        Set<Character> meno = new HashSet<>();
+        meno.add(s.charAt(0));
+        int maxLength = 1;
+        while (fast < s.length()) {
+            while (fast < s.length() && !meno.contains(s.charAt(fast))) {
+                meno.add(s.charAt(fast));
+                fast++;
+            }
+
+            maxLength = Math.max(maxLength, fast - slow);
+
+            // 跳过重复字符前的所有字符
+            while (slow < s.length() && fast < s.length() && s.charAt(slow) != s.charAt(fast)) {
+                meno.remove(s.charAt(slow));
+                slow++;
+            }
+
+            fast++;
+            slow++;
+        }
+
+        return maxLength;
+    }
 }
